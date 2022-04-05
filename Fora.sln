@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fora.UI", "Fora.UI\Fora.UI.csproj", "{17B6E8F2-5A2B-4E86-9D13-D9554B70D2D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fora.API", "Fora.API\Fora.API.csproj", "{6E910660-31CD-417C-8ACF-E78974F89230}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17B6E8F2-5A2B-4E86-9D13-D9554B70D2D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B6E8F2-5A2B-4E86-9D13-D9554B70D2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B6E8F2-5A2B-4E86-9D13-D9554B70D2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B6E8F2-5A2B-4E86-9D13-D9554B70D2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E910660-31CD-417C-8ACF-E78974F89230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E910660-31CD-417C-8ACF-E78974F89230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E910660-31CD-417C-8ACF-E78974F89230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E910660-31CD-417C-8ACF-E78974F89230}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {723C369D-4924-4BD3-A364-97FA7D1EBCED}
+	EndGlobalSection
+EndGlobal
