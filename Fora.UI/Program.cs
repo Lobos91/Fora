@@ -1,6 +1,6 @@
 
 global using Fora.UI.Models;
-using Fora.API.Data;
+using Fora.UI.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+
+
 var connectionString3 = builder.Configuration.GetConnectionString("AuthConnection");
-builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString3));
+builder.Services.AddDbContext<AuthDbContextUI>(options => options.UseSqlServer(connectionString3));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AuthDbContextUI>();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AuthDbContext>();
 
+var connectionString4 = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContextUI>(options => options.UseSqlServer(connectionString4));
 
 var app = builder.Build();
 

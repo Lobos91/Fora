@@ -1,15 +1,14 @@
 ﻿using Fora.UI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fora.API.Data
+namespace Fora.UI.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContextUI : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContextUI(DbContextOptions<AppDbContextUI> options) : base(options)
         {
 
         }
-
         public DbSet<UserInterestModel> UserInterests { get; set; }
         public DbSet<InterestModel> Interests { get; set; }
         public DbSet<ThreadModel> Threads { get; set; }
