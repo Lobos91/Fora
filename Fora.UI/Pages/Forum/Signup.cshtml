@@ -1,0 +1,50 @@
+﻿@page
+@model Fora.UI.Pages.Forum.SignupModel
+
+
+
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div asp-validation-summary="All"></div>
+
+      
+
+        <div class="mb-3">
+            <label asp-for="Signup.Username"></label>
+            <input asp-for="Signup.Username" id="username" class="form-control mb-2" type="text" placeholder="Username" />
+            <span class="text-warning" asp-validation-for="Signup.Username"></span>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Signup.Email"></label>
+            <input asp-for="Signup.Email" id="email" class="form-control mb-2" type="email" placeholder="Email" />
+            <span class="text-warning" asp-validation-for="Signup.Email"></span>
+         </div>
+         <div class="mb-3">
+            <label asp-for="Signup.Password"></label>
+            <input asp-for="Signup.Password" id="password" class="form-control mb-2" type="password" placeholder="Password" />
+            <span class="text-warning" asp-validation-for="Signup.Password"></span>
+         </div>
+      
+          <div class="mb-3">
+            <label asp-for="Signup.VerifiedPassword"></label>     
+            <input asp-for="Signup.VerifiedPassword" id="verify-password" class="form-control mb-4" type="password" placeholder="Verify password" />
+            <span class="text-warning" asp-validation-for="Signup.VerifiedPassword"></span>
+          </div>
+
+          <div class="mb-3">
+            <label asp-for="@Model.NewInterestName"></label>     
+            <input asp-for="@Model.NewInterestName" class="form-control mb-4" type="text" placeholder="Add Interest" />
+            <span class="text-warning" asp-validation-for="@Model.NewInterestName"></span>
+          </div>
+
+        <button type="submit" class="btn btn-outline-dark" >Sign up</button>
+   
+    </div>
+</form>
+
+
+@section Scripts {
+     <partial name="_ValidationScriptsPartial" />
+}
+
