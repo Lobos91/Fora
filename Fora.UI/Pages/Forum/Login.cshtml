@@ -9,10 +9,12 @@
     <div class="mb-2">
         <label for="username" class="form-label">Username:</label>
         <input asp-for="@Model.Username" id="username" class="form-control mb-2" type="text" placeholder="Username" />
+           <span class="text-warning" asp-validation-for="@Model.Username"></span>
 
         <label for="password" class="form-label">Password:</label>
         <input asp-for="@Model.Password" id="password" class="form-control mb-4" type="password" placeholder="Password" />
+           <span class="text-warning" asp-validation-for="@Model.Password"></span>
 
-        <input type="submit" class="btn btn-outline-dark" value="Sign in!" />
+        <input type="submit" class="btn btn-outline-light" value="Sign in!" />
     </div>
 </form>

@@ -16,6 +16,7 @@ namespace Fora.UI.Pages.Forum
         public UserModel User { get; set; } 
 
        [Required]
+       [Display(Name = "Create new interest")]
         public string NewInterestName { get; set; }
 
         public SignupModel(SignInManager<IdentityUser> signInManager, AppDbContextUI context)
@@ -74,7 +75,7 @@ namespace Fora.UI.Pages.Forum
                                 });
                             }
                             // Omdirigera till välkomstsidan
-                            return RedirectToPage("/Index");
+                            return RedirectToPage("/Forum/Threads");
                         }
                     }
                 
