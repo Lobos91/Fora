@@ -25,10 +25,12 @@ namespace Fora.UI.Pages.Forum
 
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(bool logMeOut)
         {
-
-           await _signInManager.SignOutAsync();
+           if (logMeOut)
+           {
+                await _signInManager.SignOutAsync();
+           }
 
            return RedirectToPage("/Index");
         }
