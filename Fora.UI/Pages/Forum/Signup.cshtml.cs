@@ -68,11 +68,26 @@ namespace Fora.UI.Pages.Forum
 
                             if (user != null)
                             {
-                                await new InterestManager(_context).CreateInterestAsync(new InterestModel() // Create interest
+                               
+                                await new InterestManager(_context).CreateInterestAsync(new InterestModel () // Create interest
                                 {
                                     Name = NewInterestName,
                                     User = user
                                 });
+
+                                var interestToAdd = _context.Interests.Where(x => x.Name == NewInterestName).FirstOrDefault();
+
+                                if (interestToAdd != null)
+                                {
+                                    _context.UserInterests.Add(new UserInterestModel()
+                                    {
+                                        Interest = interestToAdd,
+                                        User = user
+                                    });
+                                   
+                                }
+                                _context.SaveChanges();
+                                
                             }
                             // Omdirigera till välkomstsidan
                             return RedirectToPage("/Forum/Threads");

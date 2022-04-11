@@ -16,5 +16,6 @@ namespace Fora.UI.Models
         [ForeignKey(nameof(User))]
         public int? UserId { get; set; }
         public UserModel? User { get; set; }
+
     }
 }
