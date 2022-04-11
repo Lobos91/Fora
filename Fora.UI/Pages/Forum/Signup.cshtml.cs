@@ -13,7 +13,7 @@ namespace Fora.UI.Pages.Forum
         private readonly AppDbContextUI _context;
         private readonly SignInManager<IdentityUser> _signInManager;
         public RegistrationModel Signup { get; set; }
-        public UserModel User { get; set; } = new UserModel();
+        public UserModel User { get; set; } 
 
        [Required]
         public string NewInterestName { get; set; }
@@ -21,7 +21,8 @@ namespace Fora.UI.Pages.Forum
         public SignupModel(SignInManager<IdentityUser> signInManager, AppDbContextUI context)
         {
             _signInManager = signInManager;
-            _context = context; 
+            _context = context;
+            User = new UserModel();
         }
 
       
@@ -34,9 +35,10 @@ namespace Fora.UI.Pages.Forum
         {
             //await _signInManager.SignOutAsync();
             User.Username = Signup.Username;
+
             await _context.AddAsync(User);
             await _context.SaveChangesAsync();
-           
+
 
             if (ModelState.IsValid)
             {
@@ -60,9 +62,8 @@ namespace Fora.UI.Pages.Forum
 
                         if (!string.IsNullOrEmpty(NewInterestName))
                         {
-                            var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User); // Use the FindByNameAsync(String) method if not signed in
+                            var currentUser = await _signInManager.UserManager.FindByNameAsync(User.Username); // Use the FindByNameAsync(String) method if not signed in
                             var user = _context.Users.FirstOrDefault(u => u.Username == currentUser.UserName); // Get the corresponding user in the other db
-                            //OBS! NULL EXCEPTION (i dunno how to fix it :(
 
                             if (user != null)
                             {
@@ -76,11 +77,13 @@ namespace Fora.UI.Pages.Forum
                             return RedirectToPage("/Index");
                         }
                     }
+                
                 }
-              
-            }
+            
 
-            return Page();
+             }
+        return Page();
+         
         }
     }
 }

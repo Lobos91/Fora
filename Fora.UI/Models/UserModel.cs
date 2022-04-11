@@ -12,3 +12,4 @@
         public List<MessageModel>? Messages { get; set; } // Messages created by this user
     }
 }
+ 
