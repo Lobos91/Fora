@@ -1,4 +1,4 @@
-﻿using Fora.UI.Models;
+﻿using Fora.API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fora.API.Data

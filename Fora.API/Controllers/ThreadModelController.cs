@@ -1,4 +1,5 @@
 ﻿using Fora.API.Data;
+using Fora.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fora.API.Controllers
@@ -22,20 +23,40 @@ namespace Fora.API.Controllers
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetThread(int threadId)
         {
-            if (threadId == null)
+            var requestedThread =  _context.Threads.FirstOrDefault(x => x.Id == threadId);
+
+            if (requestedThread == null)
             {
                 return BadRequest();
             }
 
-            return Ok(_context.Threads.FirstOrDefault(x => x.Id == threadId));
+            return Ok(requestedThread);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostThread(Thread thread)
+        public async Task<IActionResult> PostThread(ThreadModel thread)
         {
-           // _context.Threads.Add(thread);
+            _context.Threads.Add(thread);
+        
             await _context.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteThread(int threadId)
+        {
+            var threadToDelete = _context.Threads.FirstOrDefault(x => x.Id == threadId);
+
+            if (threadToDelete == null)
+            {
+              return NotFound();
+            }
+           
+            _context.Threads.Remove(threadToDelete);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+   
     }
 }

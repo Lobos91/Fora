@@ -19,6 +19,7 @@ var connectionString2 = builder.Configuration.GetConnectionString("AuthConnectio
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString2));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AuthDbContext>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
