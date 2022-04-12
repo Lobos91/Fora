@@ -1,22 +1,26 @@
 ﻿using Fora.API.Data;
 using Fora.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fora.API.Controllers
 {
   
     [Route("api/[controller]")]
     [ApiController]
-    public class ThreadModelController : Controller
+    public class ThreadController : Controller
     {
         private readonly AppDbContext _context;
-        public ThreadModelController(AppDbContext context) { _context = context; }
+        public ThreadController(AppDbContext context) { _context = context; }
 
         [HttpGet]
 
         public async Task<IActionResult> GetAllThreads()
         {
-            var threadList = _context.Threads.ToList();
+            var threadList = _context.Threads
+                                    .Include(u => u.User)
+                                    .Include(m => m.Messages)
+                                    .ToList();
             return Json(new { data = threadList });
         }
 

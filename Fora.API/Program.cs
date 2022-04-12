@@ -19,6 +19,10 @@ var connectionString2 = builder.Configuration.GetConnectionString("AuthConnectio
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString2));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AuthDbContext>();
 
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 var app = builder.Build();
 
