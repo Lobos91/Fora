@@ -1,6 +1,4 @@
 using Fora.API.Data;
-using Fora.API.Repository;
-using Fora.API.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
