@@ -38,7 +38,7 @@ namespace Fora.UI.Pages.Forum
                 // Evaluate result of sign in
                 if (signInResult.Succeeded)
                 {
-                    return RedirectToPage("/Forum/Threads");
+                    return RedirectToPage("/Forum/Interests");
                 }
             }
 

@@ -1,0 +1,8 @@
+﻿@page
+@model Fora.UI.Pages.Forum.InterestsModel
+@{
+}
+
+@foreach(var interest in Model.Interests) {
+    <a asp-page="/forum/threads" asp-route-id="@interest.Id"><h1>@interest.Name</h1></a>
+}

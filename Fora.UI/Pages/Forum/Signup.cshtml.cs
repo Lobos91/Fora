@@ -90,7 +90,7 @@ namespace Fora.UI.Pages.Forum
                                 
                             }
                             // Omdirigera till välkomstsidan
-                            return RedirectToPage("/Forum/Threads");
+                            return RedirectToPage("/Forum/Interests");
                         }
                     }
                 
