@@ -22,7 +22,7 @@ namespace Fora.API.Controllers
                                         .Include(u => u.User)
                                         .ToList();
 
-            return Json(new { data = interests });
+            return Ok(interests);
         }
 
         [HttpGet("{Id}")]

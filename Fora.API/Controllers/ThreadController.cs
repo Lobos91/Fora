@@ -31,7 +31,7 @@ namespace Fora.API.Controllers
 
             if (requestedThread == null)
             {
-                return BadRequest();
+                return null;
             }
 
             return Ok(requestedThread);
@@ -40,6 +40,8 @@ namespace Fora.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostThread(ThreadModel thread)
         {
+            // get thread interest 
+
             _context.Threads.Add(thread);
         
             await _context.SaveChangesAsync();
