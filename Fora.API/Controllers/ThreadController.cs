@@ -21,7 +21,7 @@ namespace Fora.API.Controllers
                                     .Include(u => u.User)
                                     .Include(m => m.Messages)
                                     .ToList();
-            return Json(new { data = threadList });
+            return Ok(threadList);
         }
 
         [HttpGet("{Id}")]

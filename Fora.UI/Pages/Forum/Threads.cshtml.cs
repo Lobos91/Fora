@@ -12,7 +12,7 @@ namespace Fora.UI.Pages.Forum
         {
             ApiManager apiManager = new();
             // Get the specific thread with the id
-
+          
             Thread = await apiManager.GetOneThread(id);
            
         }

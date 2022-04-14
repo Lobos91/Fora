@@ -6,7 +6,6 @@ namespace Fora.UI.Data
     public class ApiManager
     {
         private string urlThreads = "https://localhost:7119/api/Thread";
-        private string urlThreadId = "https://localhost:7119/api/Thread/Id";
         private string urlMessages = "https://localhost:7119/api/Message";
         private string urlInterests = "https://localhost:7119/api/Interest";
 
@@ -27,7 +26,7 @@ namespace Fora.UI.Data
         {
             using (HttpClient client = new())
             {
-                var response = await client.GetFromJsonAsync<List<ThreadModel>>(urlThreadId);
+                var response = await client.GetFromJsonAsync<List<ThreadModel>>(urlThreads);
                 var getThread = response.FirstOrDefault(x => x.Id == id);
                 
                 return getThread;
