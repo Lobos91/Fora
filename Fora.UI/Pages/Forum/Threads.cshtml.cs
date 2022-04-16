@@ -1,32 +1,40 @@
 using Fora.UI.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Fora.UI.Pages.Forum
 {
-    [BindProperties]
     public class ThreadsModel : PageModel
     {
-        public ThreadModel Thread { get; set; }
-        public async void OnGet(int id)
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public ThreadsModel(SignInManager<IdentityUser> signInManager)
         {
-            ApiManager apiManager = new();
-            // Get the specific thread with the id
-          
-            Thread = await apiManager.GetOneThread(id);
-           
+            _signInManager = signInManager;
         }
 
+        public List<ThreadModel> Threads { get; set; }
+        [BindProperty]
+        public ThreadModel ThreadToPost { get; set; }
+
+        ApiManager apiManager = new();
+        public async void OnGet(int id)
+        {
+            // Get the specific thread with the id
+           var threads = await apiManager.ReturnAllThreads();
+           Threads = threads.Where(t => t.InterestId == id).ToList();
+            
+        }
         public async Task<IActionResult> OnPost()
         {
-            ApiManager apiManager = new();
+            var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
+            var users = await apiManager.GetUsers();
+            var user =  users.FirstOrDefault(u => u.Username == currentUser.UserName);
 
-            await apiManager.PostThread(Thread);
+            ThreadToPost.User = user;
+            await apiManager.PostThread(ThreadToPost);
 
-            if (ModelState.IsValid)
-            {
-
-            }
 
             return Page();
         }

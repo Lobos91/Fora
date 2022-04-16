@@ -40,7 +40,6 @@ namespace Fora.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostThread(ThreadModel thread)
         {
-            // get thread interest 
 
             _context.Threads.Add(thread);
         

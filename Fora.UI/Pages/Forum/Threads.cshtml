@@ -6,9 +6,17 @@
 
 
  <h1>Thread test
-    @if(@Model.Thread == null )
+    @if(@Model.Threads == null )
     {
         <p>No Threads found</p>
+    }
+    else
+    {
+        foreach (var thread in @Model.Threads)
+        {
+            <h2>@thread.Name</h2>
+            <h2>@thread.Messages[0]</h2>
+        }
     }
 </h1>
 
@@ -91,23 +99,24 @@
    <form method="post">
      
         <div asp-validation-summary="All"></div>
+          
       
           <div class="mb-3">
-            <label class="text-white" asp-for="Thread.Name"></label>     
-            <input asp-for="Thread.Name" class="form-control mb-4" type="text" placeholder="Thread name" />
-            <span class="text-warning" asp-validation-for="Thread.Name"></span>
+            <label class="text-white" asp-for="ThreadToPost.Name"></label>     
+            <input asp-for="ThreadToPost.Name"  class="form-control mb-4" type="text" placeholder="Thread name" />
+            <span class="text-warning" asp-validation-for="ThreadToPost.Name"></span>
           </div>
 
            <div class="mb-3">
-            <label class="text-white" asp-for="Thread.Messages"></label>     
-            <input asp-for="Thread.Messages" class="form-control mb-4" type="text" placeholder="Message" />
-            <span class="text-warning" asp-validation-for="Thread.Messages"></span>
+            <label class="text-white" asp-for="ThreadToPost.Messages[0].Message"></label>     
+            <input asp-for="ThreadToPost.Messages[0].Message" class="form-control mb-4" type="text" placeholder="Message" />
+            <span class="text-warning" asp-validation-for="ThreadToPost.Messages[0].Message"></span>
           </div>
 
           <div class="mb-3">
-            <label class="text-white" asp-for="Thread.Interest"></label>     
-            <input asp-for="Thread.Interest" class="form-control mb-4" type="text" placeholder="Interest" />
-            <span class="text-warning" asp-validation-for="Thread.Interest"></span>
+            <label class="text-white" asp-for="ThreadToPost.Interest.Name"></label>     
+            <input asp-for="ThreadToPost.Interest.Name" class="form-control mb-4" type="text" placeholder="Interest" />
+            <span class="text-warning" asp-validation-for="ThreadToPost.Interest.Name"></span>
           </div>
 
         <button type="submit" class="btn btn-outline-light" >Post</button>
