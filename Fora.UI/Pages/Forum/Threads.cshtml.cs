@@ -28,11 +28,12 @@ namespace Fora.UI.Pages.Forum
         }
         public async Task<IActionResult> OnPost()
         {
+            //Get userName
             var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
             var users = await apiManager.GetUsers();
             var user =  users.FirstOrDefault(u => u.Username == currentUser.UserName);
-
             ThreadToPost.User = user;
+
             await apiManager.PostThread(ThreadToPost);
 
 

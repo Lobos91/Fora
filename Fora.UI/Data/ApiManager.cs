@@ -9,6 +9,8 @@ namespace Fora.UI.Data
         private string urlMessages = "https://localhost:7119/api/Message";
         private string urlInterests = "https://localhost:7119/api/Interest";
         private string urlUser = "https://localhost:7119/api/User";
+        private string urlUserInterest = " https://localhost:7119/api/UserInterest";
+       
 
 
         public async Task<List<ThreadModel>> ReturnAllThreads()
@@ -68,6 +70,17 @@ namespace Fora.UI.Data
             using (HttpClient client = new())
             {
                 var response = await client.GetFromJsonAsync<List<InterestModel>>(urlInterests);
+                return response;
+            }
+
+            return null;
+        }
+
+        public async Task<List<UserInterestModel>> GetUserInterests()
+        {
+            using (HttpClient client = new())
+            {
+                var response = await client.GetFromJsonAsync<List<UserInterestModel>>(urlUserInterest);
                 return response;
             }
 

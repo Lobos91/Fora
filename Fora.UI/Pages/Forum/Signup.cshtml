@@ -1,6 +1,12 @@
 ﻿@page
 @model Fora.UI.Pages.Forum.SignupModel
 
+@{
+    if(TempData["Failed"] != null)
+    {
+        <h3>@TempData["Failed"]</h3>
+    }
+}
 
 
 

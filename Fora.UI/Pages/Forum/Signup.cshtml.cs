@@ -35,10 +35,6 @@ namespace Fora.UI.Pages.Forum
         public async Task<IActionResult> OnPostAsync()
         {
             //await _signInManager.SignOutAsync();
-            User.Username = Signup.Username;
-
-            await _context.AddAsync(User);
-            await _context.SaveChangesAsync();
 
 
             if (ModelState.IsValid)
@@ -54,7 +50,10 @@ namespace Fora.UI.Pages.Forum
 
                 if (registration.Succeeded)
                 {
-               
+                    User.Username = Signup.Username;
+
+                    await _context.AddAsync(User);
+                    await _context.SaveChangesAsync();
                     // Logga in användare
                     var signInResult = await _signInManager.PasswordSignInAsync(Signup.Username, Signup.Password, false, false);
 
@@ -98,6 +97,7 @@ namespace Fora.UI.Pages.Forum
             
 
              }
+        TempData["Failed"] = "Registration failed. Password must contain big and small letter, number and special character";
         return Page();
          
         }
