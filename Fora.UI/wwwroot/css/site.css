@@ -16,3 +16,77 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*start JBJ*/
+
+@keyframes typing {
+    from {
+        width: 0%
+    }
+
+    to {
+        width: auto, fit-content
+    }
+}
+
+/*above is for all typewriter effect*/
+
+/* The typewriter cursor effect */
+@keyframes blink-caret-welcome {
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: white
+    }
+}
+
+/*css-typing-welcome*/
+.css-typing-welcome p {
+    border-right: 0.3em solid orange;
+    font-size: 70px;
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 100px 100px 30px 0px;
+}
+
+    .css-typing-welcome p:nth-child(1) {
+        width: 9.3em;
+        -webkit-animation: typing 1.8s steps(30, end);
+        animation: typing 1.8s steps(30, end), blink-caret-welcome .5s step-end infinite;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+
+/**/
+
+@keyframes blink-caret-about {
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: deeppink
+    }
+}
+
+/*css-typing-about*/
+.css-typing-about p {
+    border-right: .4em solid orange;
+    font-size: 40px;
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 210px;
+    margin-top: 40px;
+}
+
+    .css-typing-about p:nth-child(1) {
+        width: 30em;
+        -webkit-animation: typing 1.5s steps(30, end);
+        animation: typing 1.5s steps(30, end), blink-caret-about .5s step-end infinite;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
