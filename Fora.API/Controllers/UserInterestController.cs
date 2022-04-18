@@ -46,7 +46,7 @@ namespace Fora.API.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         
         public async Task DeleteInterest(int id)
         {
