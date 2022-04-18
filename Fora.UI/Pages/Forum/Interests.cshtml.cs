@@ -6,6 +6,7 @@ namespace Fora.UI.Pages.Forum
 {
     public class InterestsModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
         public List<InterestModel> Interests { get; set; }
         public async Task OnGet()
         {
