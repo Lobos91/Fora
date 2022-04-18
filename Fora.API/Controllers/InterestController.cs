@@ -47,21 +47,17 @@ namespace Fora.API.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteInterest(int id)
+
+        [HttpDelete("{id}")]
+
+        public async Task DeleteInterest(int id)
         {
             var interestToDelete = _context.Interests.FirstOrDefault(x => x.Id == id);
 
-            if (interestToDelete == null)
-            {
-              return NotFound();
-            }
-           
             _context.Interests.Remove(interestToDelete);
             await _context.SaveChangesAsync();
-            return Ok();
         }
 
-   
+
     }
 }
