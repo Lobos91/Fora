@@ -9,7 +9,7 @@ namespace Fora.API.Controllers
   
     [Route("api/[controller]")]
     [ApiController]
-    public class UserInterestController : Controller
+    public class UserInterestController : ControllerBase
     {
         private readonly AppDbContext _context;
         public UserInterestController(AppDbContext context) { _context = context; }
@@ -18,7 +18,7 @@ namespace Fora.API.Controllers
 
         public async Task<IActionResult> GetAllUserInterests()
         {
-            var interests = _context.UserInterests.Include(u => u.User).ToList();
+            var interests = _context.UserInterests.Include(u => u.Interest).ToList();
                                       
 
             return Ok(interests);
@@ -46,19 +46,14 @@ namespace Fora.API.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteInterest(int id)
+        [HttpDelete("{id}")]
+        
+        public async Task DeleteInterest(int id)
         {
             var userInterestToDelete = _context.UserInterests.FirstOrDefault(x => x.InterestId == id);
-
-            if (userInterestToDelete == null)
-            {
-              return NotFound();
-            }
-           
+       
             _context.UserInterests.Remove(userInterestToDelete);
             await _context.SaveChangesAsync();
-            return Ok();
         }
 
    
