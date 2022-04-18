@@ -25,7 +25,7 @@ body {
     }
 
     to {
-        width: auto, fit-content
+        width: auto , fit-content
     }
 }
 
@@ -46,12 +46,11 @@ body {
 .css-typing-welcome p {
     border-right: 0.3em solid orange;
     font-size: 70px;
-    font-weight: 900;
+    font-weight:900;
     white-space: nowrap;
     overflow: hidden;
     margin: 100px 100px 30px 0px;
 }
-
     .css-typing-welcome p:nth-child(1) {
         width: 9.3em;
         -webkit-animation: typing 1.8s steps(30, end);
@@ -82,7 +81,6 @@ body {
     margin-left: 210px;
     margin-top: 40px;
 }
-
     .css-typing-about p:nth-child(1) {
         width: 30em;
         -webkit-animation: typing 1.5s steps(30, end);
@@ -90,3 +88,6 @@ body {
         -webkit-animation-fill-mode: forwards;
         animation-fill-mode: forwards;
     }
+
+/*centered*/
+
