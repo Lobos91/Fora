@@ -24,7 +24,6 @@ namespace Fora.UI.Pages.Forum.Account
         public UserSettings(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;
-            UserInterest = new UserInterestModel();
         }
 
         public async Task OnGet()

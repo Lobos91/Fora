@@ -15,6 +15,7 @@ namespace Fora.UI.Pages.Forum
         }
         [BindProperty(SupportsGet = true)]
         public InterestModel Interest { get; set; }
+      
         public int UserID { get; set; }
         [BindProperty(SupportsGet = true)]
         public List<ThreadModel> Threads { get; set; } 
@@ -27,7 +28,7 @@ namespace Fora.UI.Pages.Forum
             if(id != null)  //Just in order to load all data, otherwise it jumps to view too fast 
             {
                 var interests = await apiManager.GetInterests();
-                 Interest = interests.First(x => x.Id == id);
+                Interest = interests.First(x => x.Id == id);
 
                   var threads = await apiManager.ReturnAllThreads();
                  Threads = threads.Where(t => t.InterestId == id).ToList();
@@ -37,7 +38,6 @@ namespace Fora.UI.Pages.Forum
         }
         public async Task<IActionResult> OnPost()
         {
-          
             var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
             var users = await apiManager.GetUsers();
             var user =  users.FirstOrDefault(u => u.Username == currentUser.UserName);
@@ -49,8 +49,8 @@ namespace Fora.UI.Pages.Forum
 
             await apiManager.PostThread(ThreadToPost);
 
-
             return Page();
+          // return RedirectToPage("/Forum/Threads" + "?id=17");
         }
 
     }

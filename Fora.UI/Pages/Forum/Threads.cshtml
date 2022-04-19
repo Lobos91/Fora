@@ -4,23 +4,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
  <link rel="stylesheet" href="~/css/thread.css" asp-append-version="true" />
 
-
-
-    @if(@Model.Threads == null )
-    {
-        <p>No Threads found</p>
-    }
-    else
-    {
-        foreach (var thread in @Model.Threads)
-        {
-            <h2>@thread.Name</h2>
-          
-        }
-    }
-
-
-
 <div class="container">
 <div class="main-body p-0">
     <div class="inner-wrapper">
@@ -96,9 +79,13 @@
                                     {
                                         @foreach (var thread in @Model.Threads)
                                         {
+                                            <h3>
                                             <a asp-page="/Forum/Topic" asp-route-id="@thread.Id">
                                                 @thread.Name
                                             </a>
+                                             </h3>
+
+                                             <p>Created by: @thread.User.Username</p>
 
                                             <div class="text-muted small text-center align-self-center">
                                                 <br />
@@ -137,6 +124,8 @@
 
         <button type="submit" class="btn btn-outline-light" >Post</button>
    </form>
-
+   </div>
+   </div>
+</div>
 </div>
 </div>

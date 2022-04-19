@@ -48,7 +48,7 @@ namespace Fora.API.Controllers
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
 
         public async Task DeleteInterest(int id)
         {
@@ -57,7 +57,6 @@ namespace Fora.API.Controllers
             _context.Interests.Remove(interestToDelete);
             await _context.SaveChangesAsync();
         }
-
 
     }
 }

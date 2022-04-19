@@ -67,7 +67,6 @@ namespace Fora.UI.Pages.Forum
 
                             if (user != null)
                             {
-                               
                                 await new InterestManager(_context).CreateInterestAsync(new InterestModel () // Create interest
                                 {
                                     Name = NewInterestName,
