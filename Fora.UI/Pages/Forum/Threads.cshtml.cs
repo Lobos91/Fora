@@ -16,8 +16,8 @@ namespace Fora.UI.Pages.Forum
 
         [BindProperty(SupportsGet = true)] public InterestModel Interest { get; set; } = new();
         [BindProperty(SupportsGet = true)] public List<ThreadModel> Threads { get; set; }
-        [BindProperty] public ThreadModel ThreadToPost { get; set; }
         [BindProperty(SupportsGet = true)] public string SearchKey { get; set; } = string.Empty;
+        [BindProperty] public ThreadModel ThreadToPost { get; set; }
         public int UserID { get; set; }
        
         ApiManager apiManager = new();
@@ -43,7 +43,6 @@ namespace Fora.UI.Pages.Forum
                     var threads = await apiManager.ReturnAllThreads();
                     Threads = threads.Where(x => x.Name.Contains(SearchKey, StringComparison.CurrentCultureIgnoreCase)).ToList();
                 }
-
             }
             return Page();
 
@@ -61,18 +60,11 @@ namespace Fora.UI.Pages.Forum
 
             await apiManager.PostThread(ThreadToPost);
 
-            return Page();
-          // return RedirectToPage("/Forum/Threads" + "?id=17");
+            // return Page();
+            return RedirectToPage("/Forum/Threads");
         }
 
-        //public async Task<IActionResult> OnPostSearch(int id)
-        //{
-        //    var interests = await apiManager.GetInterests();
-        //    Interest = interests.FirstOrDefault(x => x.Id == id);
-
-
-        //    return Page();
-        //}
+    
 
     }
 }
