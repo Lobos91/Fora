@@ -13,25 +13,37 @@ namespace Fora.UI.Pages.Forum
         {
             _signInManager = signInManager;
         }
-        [BindProperty(SupportsGet = true)]
-        public InterestModel Interest { get; set; }
-      
-        public int UserID { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public List<ThreadModel> Threads { get; set; } 
-        [BindProperty]
-        public ThreadModel ThreadToPost { get; set; }
 
+        [BindProperty(SupportsGet = true)] public InterestModel Interest { get; set; } = new();
+        [BindProperty(SupportsGet = true)] public List<ThreadModel> Threads { get; set; }
+        [BindProperty] public ThreadModel ThreadToPost { get; set; }
+        [BindProperty(SupportsGet = true)] public string SearchKey { get; set; } = string.Empty;
+        public int UserID { get; set; }
+       
         ApiManager apiManager = new();
+
         public async Task<IActionResult>  OnGet(int id)
         {
-            if(id != null)  //Just in order to load all data, otherwise it jumps to view too fast 
+            if (id != 0)   
             {
                 var interests = await apiManager.GetInterests();
-                Interest = interests.First(x => x.Id == id);
+                Interest = interests.FirstOrDefault(x => x.Id == id);
 
-                  var threads = await apiManager.ReturnAllThreads();
-                 Threads = threads.Where(t => t.InterestId == id).ToList();
+                var threads = await apiManager.ReturnAllThreads();
+                Threads = threads.Where(t => t.InterestId == Interest.Id).ToList();
+            }
+            else 
+            {
+                if (string.IsNullOrEmpty(SearchKey))
+                {
+                    Threads = await apiManager.ReturnAllThreads();
+                }
+                else
+                {
+                    var threads = await apiManager.ReturnAllThreads();
+                    Threads = threads.Where(x => x.Name.Contains(SearchKey, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                }
+
             }
             return Page();
 
@@ -40,7 +52,7 @@ namespace Fora.UI.Pages.Forum
         {
             var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
             var users = await apiManager.GetUsers();
-            var user =  users.FirstOrDefault(u => u.Username == currentUser.UserName);
+            var user =  users.FirstOrDefault(u => u.Username == currentUser.UserName); 
             UserID = user.Id;
 
             ThreadToPost.UserId = UserID;
@@ -52,6 +64,15 @@ namespace Fora.UI.Pages.Forum
             return Page();
           // return RedirectToPage("/Forum/Threads" + "?id=17");
         }
+
+        //public async Task<IActionResult> OnPostSearch(int id)
+        //{
+        //    var interests = await apiManager.GetInterests();
+        //    Interest = interests.FirstOrDefault(x => x.Id == id);
+
+
+        //    return Page();
+        //}
 
     }
 }

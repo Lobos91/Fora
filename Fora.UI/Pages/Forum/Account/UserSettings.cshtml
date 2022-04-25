@@ -5,9 +5,9 @@
 
 @{ var interestCounter = 0;   var userInterestCounter = 0; var threadCounter = 0; }
 
-    <h3> Hello @Model.UserName</h3>
+    <h3> Hello @Model.User.Username</h3>
     <br />
-   
+    
 
  <div class="container row-cols-sm-auto">
   <div class="card-columns d-flex justify-content-center">
@@ -47,8 +47,8 @@
 
                 <hr />
                 <form method="post">
-                    <label asp-for="UserInterests">Add new interest:</label>
-                    <select asp-for="UserInterest" asp-items="@Model.InterestToChose" class="form-select">
+                    <label asp-for="UserInterest.InterestId">Add new interest:</label>
+                    <select asp-for="UserInterest.InterestId"  asp-items="@Model.InterestToChose" class="form-select">
                         <option disabled selected> -Add new Interest</option>
                     </select>
                     <br />

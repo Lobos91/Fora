@@ -8,39 +8,39 @@ namespace Fora.UI.Pages.Forum.Account
 {
     public class UserSettings : PageModel
     {
-
         private readonly SignInManager<IdentityUser> _signInManager;
-        public string UserName { get; set; }
-
-        public ApiManager apimanager { get; set; } = new();
-        [BindProperty(SupportsGet = true)]
-        public List<InterestModel> Interests { get; set; } = new();
-        public List<UserInterestModel> UserInterests { get; set; } = new();
-        public List<ThreadModel> Threads { get; set; } = new();
-        public UserInterestModel UserInterest { get; set; }
-
-        public IEnumerable<SelectListItem> InterestToChose { get; set; }
-
         public UserSettings(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;
         }
 
+        public ApiManager apiManager = new();
+        public UserModel User { get; set; } = new();
+        public List<ThreadModel> Threads { get; set; } = new();
+        [BindProperty(SupportsGet = true)] public List<InterestModel> Interests { get; set; } = new();
+        [BindProperty] public List<UserInterestModel> UserInterests { get; set; } = new();
+        [BindProperty] public UserInterestModel UserInterest { get; set; } = new();
+        public IEnumerable<SelectListItem> InterestToChose { get; set; }
+
+      
         public async Task OnGet()
         {
             //Hämta usern som är inloggad
             var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
-            UserName = currentUser.UserName;
+            var users = await apiManager.GetUsers();
+            User = users.FirstOrDefault(x => x.Username == currentUser.UserName);
 
             // Hämta alla interests
-            Interests = await apimanager.GetInterests();
+            Interests = await apiManager.GetInterests();
+           
             
             //Hämta interests som tillhör usern
-            UserInterests = await apimanager.GetUserInterests();
-
+            var allUserInterests = await apiManager.GetUserInterests();
+            UserInterests = allUserInterests.Where(x => x.UserId == User.Id).ToList();
+         
             //Get all threads som tillhör current usern
-            var allthreads = await apimanager.ReturnAllThreads();
-            Threads = allthreads.Where(x => x.User.Username == UserName).ToList();
+            var allthreads = await apiManager.ReturnAllThreads();
+            Threads = allthreads.Where(x => x.User.Username == User.Username).ToList();
 
             // dropdown list for adding a interest
             InterestToChose = Interests.Select(x => new SelectListItem()
@@ -48,20 +48,12 @@ namespace Fora.UI.Pages.Forum.Account
                 Text = x.Name,
                 Value = x.Id.ToString(),
             });
-
+            
         }
         // User Interest
         public async Task<IActionResult> OnPostDeleteUserInterest(int id)
         {
-            var userInterests = await apimanager.GetUserInterests();
-            var userInterest = userInterests.ToList().FirstOrDefault(x => x.InterestId == id);
-
-            if (userInterest == null)
-            {
-                return NotFound();
-            }
-
-            await apimanager.RemoveUserInterest(id);
+            await apiManager.RemoveUserInterest(id);
 
             return RedirectToPage("/Forum/Account/UserSettings");
         }
@@ -69,7 +61,7 @@ namespace Fora.UI.Pages.Forum.Account
         //App interest
         public async Task<IActionResult> OnPostDeleteInterest(int id)
         {
-            var interests = await apimanager.GetInterests();
+            var interests = await apiManager.GetInterests();
             var interest = interests.ToList().FirstOrDefault(x => x.Id == id);
 
             if (interest == null)
@@ -77,17 +69,22 @@ namespace Fora.UI.Pages.Forum.Account
                 return NotFound();
             }
 
-            await apimanager.RemoveInterest(id);
+            await apiManager.RemoveInterest(id);
 
             return RedirectToPage("/Forum/Account/UserSettings");
         }
 
         public async Task<IActionResult> OnPostAddUserInterest()
         {
-            if(ModelState.IsValid)
-            {
+            // Following 3 lines of code are neccessary, without them User.Id is always 0 (idk why)
+            var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
+            var users = await apiManager.GetUsers();
+            User = users.FirstOrDefault(x => x.Username == currentUser.UserName);
 
-                await apimanager.AddUserInterest(UserInterest);
+            if (ModelState.IsValid)
+            {
+                UserInterest.UserId = User.Id; 
+                await apiManager.AddUserInterest(UserInterest);
             }
 
             return RedirectToPage("/Forum/Account/UserSettings");

@@ -62,8 +62,8 @@ namespace Fora.UI.Pages.Forum
 
                         if (!string.IsNullOrEmpty(NewInterestName))
                         {
-                            var currentUser = await _signInManager.UserManager.FindByNameAsync(User.Username); // Use the FindByNameAsync(String) method if not signed in
-                            var user = _context.Users.FirstOrDefault(u => u.Username == currentUser.UserName); // Get the corresponding user in the other db
+                           // var currentUser = await _signInManager.UserManager.FindByNameAsync(User.Username); // Use the FindByNameAsync(String) method if not signed in
+                            var user = _context.Users.FirstOrDefault(u => u.Username == newuser.UserName); // Get the corresponding user in the other db
 
                             if (user != null)
                             {
@@ -82,10 +82,10 @@ namespace Fora.UI.Pages.Forum
                                         Interest = interestToAdd,
                                         User = user
                                     });
-                                   
+
                                 }
                                 _context.SaveChanges();
-                                
+
                             }
                             // Omdirigera till välkomstsidan
                             return RedirectToPage("/Forum/Interests");

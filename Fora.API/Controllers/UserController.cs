@@ -16,9 +16,9 @@ namespace Fora.API.Controllers
 
         public async Task<IActionResult> GetUsers()
         {
-            var threadList = _context.Users.ToList();
+            var users = _context.Users.ToList();
 
-            return Ok(threadList);
+            return Ok(users);
         }
 
         [HttpGet("{Id}")]

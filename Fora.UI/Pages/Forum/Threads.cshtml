@@ -46,24 +46,22 @@
             <div class="inner-main-header style="padding: 10px"">
                 <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#" data-toggle="inner-sidebar"><i class="material-icons">arrow_forward_ios</i></a>
 
-                <!-- DROPDOWN LIST -->
-                <select class="custom-select custom-select-sm w-auto mr-1">
-                    <option selected="">Latest</option>
-                    <option value="1">Popular</option>
-                    <option value="3">Solved</option>
-                    <option value="3">Unsolved</option>
-                    <option value="3">No Replies Yet</option>
-                </select>
-
                 <!-- SEARCH BAR -->
-                <span class="input-icon input-icon-sm ml-auto w-auto" style="padding: 10px">
-                    <input type="text" class="form-control form-control-sm bg-gray-200 border-gray-200 shadow-none mb-4 mt-4" placeholder="Search forum" />
-                </span>
+               <form method="get">
+                   <div class="input-group">
+                       <input  class="form-control" asp-for="SearchKey" />
+                       <div class="input-group-append">
+                           <button type="submit" class="btn btn-primary">Search</button>
+                       </div>
+                   </div>
+               </form>
+
+
             </div>
 
-              <div class="container row-cols-sm-auto m-3">
+            @*  <div class="container row-cols-sm-auto m-3">
                      <h4 class="card-title d-flex justify-content-center text-light">Threads for "@Model.Interest.Name"</h4>
-               </div>
+               </div>*@
 
                 <div class="container row-cols-sm-auto">
                         <div class="card col-10 m-3 border-secondary" style="padding: 10px">
@@ -85,7 +83,7 @@
                                             </a>
                                              </h3>
 
-                                             <p>Created by: @thread.User.Username</p>
+                                             <h5>Created by: @thread.User.Username</h5>
 
                                             <div class="text-muted small text-center align-self-center">
                                                 <br />
