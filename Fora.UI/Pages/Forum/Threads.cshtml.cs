@@ -2,6 +2,7 @@ using Fora.UI.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Fora.UI.Pages.Forum
 {
@@ -16,8 +17,10 @@ namespace Fora.UI.Pages.Forum
 
         [BindProperty(SupportsGet = true)] public InterestModel Interest { get; set; } = new();
         [BindProperty(SupportsGet = true)] public List<ThreadModel> Threads { get; set; }
-        [BindProperty(SupportsGet = true)] public string SearchKey { get; set; } = string.Empty;
+        [BindProperty(SupportsGet = true)] public List<InterestModel> Interests { get; set; } = new();
+        [BindProperty(SupportsGet = true)] public string? SearchKey { get; set; } = string.Empty;
         [BindProperty] public ThreadModel ThreadToPost { get; set; }
+        public IEnumerable<SelectListItem> InterestToChose { get; set; }
         public int UserID { get; set; }
        
         ApiManager apiManager = new();
@@ -44,27 +47,38 @@ namespace Fora.UI.Pages.Forum
                     Threads = threads.Where(x => x.Name.Contains(SearchKey, StringComparison.CurrentCultureIgnoreCase)).ToList();
                 }
             }
+            Interests = await apiManager.GetInterests();
+            InterestToChose = Interests.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+            });
+
             return Page();
 
         }
         public async Task<IActionResult> OnPost()
         {
-            var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
-            var users = await apiManager.GetUsers();
-            var user =  users.FirstOrDefault(u => u.Username == currentUser.UserName); 
-            UserID = user.Id;
+            if (ModelState.IsValid)
+            {
+                var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
+                var users = await apiManager.GetUsers();
+                var user = users.FirstOrDefault(u => u.Username == currentUser.UserName);
+                UserID = user.Id;
 
-            ThreadToPost.UserId = UserID;
-            ThreadToPost.Messages[0].UserId = UserID;
-            ThreadToPost.InterestId = Interest.Id;
+                ThreadToPost.UserId = UserID;
+                ThreadToPost.Messages[0].UserId = UserID;
+                ThreadToPost.InterestId = Interest.Id;
 
-            await apiManager.PostThread(ThreadToPost);
+                await apiManager.PostThread(ThreadToPost);
 
+            }
             // return Page();
             return RedirectToPage("/Forum/Threads");
         }
+    }
 
     
 
-    }
 }
+

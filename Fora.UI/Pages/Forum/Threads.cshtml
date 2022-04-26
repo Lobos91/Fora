@@ -16,6 +16,11 @@
         <textarea asp-for="ThreadToPost.Messages[0].Message" class="form-control mb-4" type="text" placeholder="Message"></textarea>
         <span class="text-warning" asp-validation-for="ThreadToPost.Messages[0].Message"></span>
 
+        <label class="text-white">Choose Interest</label>
+        <select asp-for="Interest.Id"  asp-items="@Model.InterestToChose" class="form-select">
+                    </select>
+        <span class="text-warning" asp-validation-for="Interest.Name"></span>
+
     <button type="submit" class="btn btn-outline-light">Post</button>
 </form>
 </div>
