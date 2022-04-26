@@ -47,21 +47,16 @@ namespace Fora.API.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteThread(int threadId)
+        [HttpDelete("Delete/{id}")]
+        public async Task DeleteThread(int id)
         {
-            var threadToDelete = _context.Threads.FirstOrDefault(x => x.Id == threadId);
-
-            if (threadToDelete == null)
-            {
-              return NotFound();
-            }
+            var threadToDelete = _context.Threads.FirstOrDefault(x => x.Id == id);
            
             _context.Threads.Remove(threadToDelete);
             await _context.SaveChangesAsync();
-            return Ok();
+           
         }
 
-   
+      
     }
 }

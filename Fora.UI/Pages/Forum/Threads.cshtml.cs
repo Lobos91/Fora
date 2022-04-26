@@ -21,19 +21,25 @@ namespace Fora.UI.Pages.Forum
         [BindProperty(SupportsGet = true)] public string? SearchKey { get; set; } = string.Empty;
         [BindProperty] public ThreadModel ThreadToPost { get; set; }
         public IEnumerable<SelectListItem> InterestToChose { get; set; }
-        public int UserID { get; set; }
+        [BindProperty]  public int UserID { get; set; }
        
         ApiManager apiManager = new();
 
         public async Task<IActionResult>  OnGet(int id)
         {
+
+            var currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
+            var users = await apiManager.GetUsers();
+            var user = users.FirstOrDefault(u => u.Username == currentUser.UserName);
+            UserID = user.Id;
+
             if (id != 0)   
             {
-                var interests = await apiManager.GetInterests();
-                Interest = interests.FirstOrDefault(x => x.Id == id);
+                Interest = await apiManager.GetOneInterest(id);
 
                 var threads = await apiManager.ReturnAllThreads();
                 Threads = threads.Where(t => t.InterestId == Interest.Id).ToList();
+
             }
             else 
             {
@@ -47,6 +53,7 @@ namespace Fora.UI.Pages.Forum
                     Threads = threads.Where(x => x.Name.Contains(SearchKey, StringComparison.CurrentCultureIgnoreCase)).ToList();
                 }
             }
+
             Interests = await apiManager.GetInterests();
             InterestToChose = Interests.Select(x => new SelectListItem()
             {
@@ -74,6 +81,14 @@ namespace Fora.UI.Pages.Forum
 
             }
             // return Page();
+            TempData["success"] = "Your thread was successfully posted";
+            return RedirectToPage("/Forum/Threads");
+        }
+
+        public async Task<IActionResult> OnPostDeleteTopic(int id)
+        {
+            await apiManager.RemoveThread(id);
+            TempData["success"] = "Your thread was successfully deleted";
             return RedirectToPage("/Forum/Threads");
         }
     }

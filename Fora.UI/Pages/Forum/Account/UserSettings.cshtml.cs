@@ -61,13 +61,13 @@ namespace Fora.UI.Pages.Forum.Account
         //App interest
         public async Task<IActionResult> OnPostDeleteInterest(int id)
         {
-            var interests = await apiManager.GetInterests();
-            var interest = interests.ToList().FirstOrDefault(x => x.Id == id);
+          //  var interests = await apiManager.GetInterests();
+          //  var interest = interests.ToList().FirstOrDefault(x => x.Id == id);
 
-            if (interest == null)
-            {
-                return NotFound();
-            }
+            //if (interest == null)
+            //{
+            //    return NotFound();
+            //}
 
             await apiManager.RemoveInterest(id);
 

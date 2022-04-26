@@ -53,6 +53,16 @@ namespace Fora.UI.Data
 
             return null;
         }
+        // Remove thread
+        public async Task RemoveThread(int id)
+        {
+            using (HttpClient client = new())
+            {
+                var respond = await client.DeleteAsync(urlThreads + "/Delete/" + id);
+                respond.EnsureSuccessStatusCode();
+            }
+        }
+
         // get users
         public async Task<List<UserModel>> GetUsers()
         {
@@ -76,6 +86,20 @@ namespace Fora.UI.Data
 
             return null;
         }
+
+        public async Task<InterestModel> GetOneInterest(int id)
+        {
+            using (HttpClient client = new())
+            {
+                var response = await client.GetFromJsonAsync<List<InterestModel>>(urlInterests);
+                var getInterest = response.FirstOrDefault(x => x.Id == id);
+
+                return getInterest;
+            }
+
+            return null;
+        }
+
 
         public async Task RemoveInterest(int id)
         {
