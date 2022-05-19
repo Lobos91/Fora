@@ -1,11 +1,62 @@
 ﻿@page
 @model Fora.UI.Pages.Forum.TopicModel
 @{
+
 }
 
-<h1>Topic page</h1>
 
-<h3>@Model.Topic.Name</h3>
-<h5>@Model.Topic.Messages[0].Message</h5>
+ <h1 class="text-center" style="font-family:Algerian">@Model.Topic.Name</h1>
+
+<div class="container row-cols-sm-auto">
+
+   
+    @foreach (var message in @Model.Topic.Messages)
+    {
+        <div class="card mb-3 card col-10 m-3 border-secondary" style="padding: 10px;">
+            <div class="row no-gutters">
+                <div class="col-md-4" style="width: 160px">
+                    <img src="~/unknown_user.jpg" class="card-img" >
+                    <div>
+                        <p>Posts: @message.User.Messages.Count()</p>
+                        <p>Topics created: @message.User.Threads.Count()</p>
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@message.User.Username</h5> 
+                        <p class="card-text">@message.Message</p>
+                        @{
+                            if(message.UserId == Model.User.Id)
+                            {
+                                <form method="post">
+                                    <button asp-page-handler="DeletePost" asp-route-id="@message.Id" onclick="return confirm('Are you sure you want to delete your post?')" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-dash-square-fill"></i> &nbsp; Delete my post
+                                    </button>
+                                </form>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        }
+    
+</div>
 
 
+
+<div class="card col-8 m-3 border-warning m-3" style="padding: 10px">
+    <h3>Hello @Model.User.Username</h3>
+<form method="post">
+  <div class="m-3">
+  
+        <label class="text-white">Add new message</label>
+        <textarea asp-for="NewMessage.Message" class="form-control mb-4" type="text" placeholder="Message"></textarea>
+        <span class="text-warning" asp-validation-for="NewMessage.Message"></span>
+       
+  </div>
+    <button type="submit" class="btn btn-outline-light">Post</button>
+</form>
+</div>

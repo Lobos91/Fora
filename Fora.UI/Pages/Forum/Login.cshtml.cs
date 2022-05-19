@@ -28,7 +28,7 @@ namespace Fora.UI.Pages.Forum
         public async Task<IActionResult> OnPost()
         {
 
-            if(ModelState.IsValid)
+            if(ModelState.IsValid) 
             {
                 // Sign in user
 
