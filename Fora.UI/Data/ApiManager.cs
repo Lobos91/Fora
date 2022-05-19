@@ -147,6 +147,20 @@ namespace Fora.UI.Data
             return null;
         }
 
+        public async Task<InterestModel> AddInterest(InterestModel interest)
+        {
+            using (HttpClient client = new())
+            {
+                using (var response = await client.PostAsJsonAsync<InterestModel>(urlInterests, interest))
+                {
+                    var strResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<InterestModel>(strResponse);
+                }
+            }
+
+            return null;
+        }
+
 
         // add message
         public async Task<MessageModel> AddMessage (MessageModel message)

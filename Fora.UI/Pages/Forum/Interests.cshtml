@@ -4,9 +4,49 @@
 }
 <partial name="_Notyfications" />
 
-@foreach(var interest in Model.Interests) {
-    <a asp-page="/forum/threads" asp-route-id="@interest.Id"><h1>@interest.Name</h1></a>
-}
+<div class="container row-cols-sm-auto">
+    <div class="card-columns d-flex justify-content-center">
+
+        <!-- USER INTEREST TABLE-->
+        <div class="card col-6 m-3 border-primary" style="padding: 10px">
+            <div class="card-block">
+                <h4 class="card-title">Interests available:</h4>
+                <table class="table table-dark">
+                    <thead>
+                       
+                    </thead>
+                    <tbody>
+                        @foreach (var interest in Model.Interests)
+                        {
+                            <tr>
+                                <td>   <a asp-page="/forum/threads" asp-route-id="@interest.Id"><h5>@interest.Name</h5></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+         <!-- Create new interest-->
+        <div class="card col-6 m-3 border-primary" style="padding: 10px">
+            <div class="card-block">
+                <h4 class="card-title">Create new interest on Fora:</h4>
+                <form method="post">
+                    <div class="m-3">
+
+                        <label class="text-white" asp-for="Interest.Name"></label>
+                        <input asp-for="Interest.Name" class="form-control mb-4" type="text" placeholder="New interest name" />
+                        <span class="text-warning" asp-validation-for="Interest.Name"></span>
+                      
+                    </div>
+                    <button type="submit" class="btn btn-outline-light">Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
