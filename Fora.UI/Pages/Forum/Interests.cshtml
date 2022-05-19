@@ -2,7 +2,11 @@
 @model Fora.UI.Pages.Forum.InterestsModel
 @{
 }
+<partial name="_Notyfications" />
 
 @foreach(var interest in Model.Interests) {
     <a asp-page="/forum/threads" asp-route-id="@interest.Id"><h1>@interest.Name</h1></a>
 }
+
+
+

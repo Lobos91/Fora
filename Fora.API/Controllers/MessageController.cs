@@ -18,8 +18,9 @@ namespace Fora.API.Controllers
         public async Task<IActionResult> GetAllMesages()
         {
             var messages = _context.Messages.Include(u => u.User).ToList();
-            return Json(new { data = messages });
+            return Ok(messages);
         }
+
 
         [HttpGet("{Id}")]
         public IActionResult GetMessage(int id)
@@ -43,21 +44,19 @@ namespace Fora.API.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteMessage(int id)
+        [HttpDelete("Delete/{id}")]
+        public async Task DeleteMessage(int id)
         {
             var messageToDelete = _context.Messages.FirstOrDefault(x => x.Id == id);
-
-            if (messageToDelete == null)
-            {
-              return NotFound();
-            }
            
             _context.Messages.Remove(messageToDelete);
             await _context.SaveChangesAsync();
-            return Ok();
+          
         }
 
-   
+
+     
+
+
     }
 }

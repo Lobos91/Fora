@@ -47,12 +47,14 @@ namespace Fora.UI.Data
                 using (var response = await client.PostAsJsonAsync<ThreadModel>(baseURL + "Thread", thread))
                 {
                     var strResponse = await response.Content.ReadAsStringAsync();
+                    
                     return JsonConvert.DeserializeObject<ThreadModel>(strResponse);
                 }
             }
 
             return null;
         }
+
         // Remove thread
         public async Task RemoveThread(int id)
         {
@@ -145,6 +147,42 @@ namespace Fora.UI.Data
             return null;
         }
 
+
+        // add message
+        public async Task<MessageModel> AddMessage (MessageModel message)
+        {
+            using (HttpClient client = new())
+            {
+                using (var response = await client.PostAsJsonAsync<MessageModel>(urlMessages, message))
+                {
+                    var strResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<MessageModel>(strResponse);
+                }
+            }
+
+            return null;
+        }
+
+        // Remove message
+        public async Task DeleteMessage(int id)
+        {
+            using (HttpClient client = new())
+            {
+                var respond = await client.DeleteAsync(urlMessages + "/Delete/" + id);
+                respond.EnsureSuccessStatusCode();
+            }
+        }
+
+        public async Task<List<MessageModel>> GetAllMesages()
+        {
+            using (HttpClient client = new())
+            {
+                var response = await client.GetFromJsonAsync<List<MessageModel>>(urlMessages);
+                return response;
+            }
+
+            return null;
+        }
 
     }
 }
